@@ -1,5 +1,5 @@
 import { testLabels } from "@/shared/utils/testLabels";
-import { runSharedTests } from "../shared/createRestaurant.shared.spec";
 import { makeDepsInMemory } from "../shared/makeDeps";
+import { runSharedTests } from "../shared/removeMenuItem.shared.spec";
 
 runSharedTests(testLabels.unitInMemory, makeDepsInMemory);

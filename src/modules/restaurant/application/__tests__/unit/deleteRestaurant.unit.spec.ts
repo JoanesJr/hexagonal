@@ -1,4 +1,5 @@
+import { testLabels } from "@/shared/utils/testLabels";
 import { runSharedTests } from "../shared/deleteRestaurant.shared.spec";
 import { makeDepsInMemory } from "../shared/makeDeps";
 
-runSharedTests('nit - InMemory', makeDepsInMemory);
+runSharedTests(testLabels.unitInMemory, makeDepsInMemory);

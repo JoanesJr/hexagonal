@@ -39,9 +39,9 @@ export class PrismaMenuItemRepository extends PrismaRepository implements IMenuI
         return menuItens;
     }
 
-    async findAllByRestaurant(restaurantid: string) {
+    async findAllByRestaurant(restaurantId: string) {
         const menuItens = await this.prisma.menuItem.findMany({
-            where: {restaurantid}
+            where: {restaurantId}
         })
 
         return menuItens;
