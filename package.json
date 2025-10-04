@@ -1,0 +1,43 @@
+{
+  "name": "hexagonal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Joanes Nunes Junior Lebarch",
+    "email": "joanesdejesusjr@gmail.com"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "start:dev": "node src/index.ts",
+    "build": "tsc",
+    "test:watch": "vitest",
+    "test:unit": "vitest run src/modules/**/application/__tests__/unit",
+    "test:integration": "vitest run src/modules/**/application/__tests__/integration",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "prisma:generate": "npx prisma generate --schema ./src/infra/prisma/schema.prisma",
+    "prisma:migrate-dev": "npx prisma migrate dev --schema ./src/infra/prisma/schema.prisma",
+    "prisma:reset": "npx prisma migrate reset --force --schema ./src/infra/prisma/schema.prisma"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.6.2",
+    "@vitest/coverage-c8": "0.29.8",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "4.0.8",
+    "vitest": "0.29.8"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.3",
+    "@vitest/ui": "0.29.8",
+    "dotenv": "^17.2.3",
+    "prisma": "^6.16.3",
+    "zod": "^4.1.11"
+  }
+}
