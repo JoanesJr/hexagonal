@@ -3,6 +3,7 @@ import { UpdateRestaurantDTO } from "../domain/dto";
 import { IRestaurantReader } from "../ports/IRestaurantReader";
 import { IRestaurantWriter } from "../ports/IRestaurantWriter";
 import { NotFoundError } from "@/shared/errors/NotFound.error";
+import { Restaurant } from "../domain/restaurant";
 
 export class UpdateRestaurantUseCase {
     constructor(
@@ -19,8 +20,10 @@ export class UpdateRestaurantUseCase {
         if (!existsRestaurant) {
             throw new NotFoundError(UpdateRestaurantUseCase.name);
         }
+        const mergedData = Object.assign({}, existsRestaurant, dto);
+        const restaurant = new Restaurant(mergedData.id, mergedData.name, mergedData.address, mergedData.isOpen);
 
-        const restaurant = await this.restaurantWriter.update(id, dto);
-        return restaurant;
+        const updated = await this.restaurantWriter.update(id, restaurant);
+        return updated;
     }
 }

@@ -8,6 +8,8 @@ import { AlreadyExistsError } from "@/shared/errors/AlreadyExists.error";
 import { InvalidPriceError } from "@/shared/errors/InvalidPrice.error";
 import { RestaurantIsClosedError } from "@/shared/errors/RestaurantIsClosedError";
 import { IDepsFactory } from "./interfaces.shared";
+import { MissingFieldError } from "@/shared/errors/MissingField.error";
+import { MinLengthError } from "@/shared/errors/MinLengh.error";
 
 
 export function runSharedTests(label: string, makeDeps: IDepsFactory) {
@@ -64,6 +66,26 @@ export function runSharedTests(label: string, makeDeps: IDepsFactory) {
             const {createRestaurant, sut} = makeUseCase();
             const restaurant = await createRestaurant.execute(mockDTO.first);
             await expect(() => sut.execute({...mockMenuItensDTO.three, restaurantId: restaurant.id})).rejects.toBeInstanceOf(RestaurantIsClosedError);
+        })
+
+        it ("should be not create MenuItem without name or name min lengh 3", async () => {
+            const {sut, createRestaurant} = makeUseCase();
+            const { id: restaurantId } = await createRestaurant.execute(mockDTO.second);
+            await expect(() => sut.execute({name: '', description: mockMenuItensDTO.first.description, price: mockMenuItensDTO.first.price, restaurantId})).rejects.toBeInstanceOf(MissingFieldError);
+            await expect(() => sut.execute({name: 'aa', description: mockMenuItensDTO.first.description, price: mockMenuItensDTO.first.price, restaurantId})).rejects.toBeInstanceOf(MinLengthError);
+        })
+
+        it ("should be not create MenuItem without description or description min lengh 3", async () => {
+            const {sut, createRestaurant} = makeUseCase();
+            const { id: restaurantId } = await createRestaurant.execute(mockDTO.second);
+            await expect(() => sut.execute({name:  mockMenuItensDTO.first.name, description: '', price: mockMenuItensDTO.first.price, restaurantId})).rejects.toBeInstanceOf(MissingFieldError);
+            await expect(() => sut.execute({name:  mockMenuItensDTO.first.name, description: 'aa', price: mockMenuItensDTO.first.price, restaurantId})).rejects.toBeInstanceOf(MinLengthError);
+        })
+
+        it ("should be not create MenuItem with price less than 0", async () => {
+            const {sut, createRestaurant} = makeUseCase();
+            const { id: restaurantId } = await createRestaurant.execute(mockDTO.second);
+            await expect(() => sut.execute({name:  mockMenuItensDTO.first.name, description: mockMenuItensDTO.first.description, price: -1, restaurantId})).rejects.toBeInstanceOf(InvalidPriceError);
         })
     })
 } 

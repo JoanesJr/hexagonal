@@ -6,6 +6,8 @@ import { InvalidPriceError } from "@/shared/errors/InvalidPrice.error";
 import { IRestaurantReader } from "@/modules/restaurant/ports/IRestaurantReader";
 import { NotFoundError } from "@/shared/errors/NotFound.error";
 import { RestaurantIsClosedError } from "@/shared/errors/RestaurantIsClosedError";
+import { MenuItem } from "../domain/menuItem";
+import { randomUUID } from "node:crypto";
 
 export class CreateMenuItemUseCase {
     constructor(private readonly menuItemReader: IMenuItemReader, private readonly menuItemWriter: IMenuItemWriter, private readonly restaurantReader: IRestaurantReader) {}
@@ -26,7 +28,9 @@ export class CreateMenuItemUseCase {
             throw new InvalidPriceError(CreateMenuItemUseCase.name);
         }
 
-        const created = await this.menuItemWriter.save(dto);
+        const item = new MenuItem(randomUUID(), dto.name, dto.description, dto.price, dto.restaurantId);
+
+        const created = await this.menuItemWriter.save(item);
         return created;
     }
 }

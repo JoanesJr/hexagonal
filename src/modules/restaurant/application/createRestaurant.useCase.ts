@@ -2,6 +2,8 @@ import { AlreadyExistsError } from "@/shared/errors/AlreadyExists.error";
 import { CreateRestaurantDTO } from "../domain/dto";
 import { IRestaurantReader } from "../ports/IRestaurantReader";
 import { IRestaurantWriter } from "../ports/IRestaurantWriter";
+import { Restaurant } from "../domain/restaurant";
+import { randomUUID } from "node:crypto";
 
 export class CreateRestaurantUseCase {
     constructor(
@@ -14,7 +16,8 @@ export class CreateRestaurantUseCase {
         if (existsName.length > 0) {
             throw new AlreadyExistsError(CreateRestaurantUseCase.name);
         }
-        const created = await this.restaurantWriter.save(data);
+        const restaurant = new Restaurant(randomUUID(), data.name, data.address, data.isOpen);
+        const created = await this.restaurantWriter.save(restaurant);
         return created;
     }
 }
