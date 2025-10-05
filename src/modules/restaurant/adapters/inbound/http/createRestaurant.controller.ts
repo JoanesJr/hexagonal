@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateRestaurantSchema } from "./shared/schemas";
+import { CreateRestaurantSchema } from "../shared/schemas";
 import { RestaurantUseCaseFactory } from "@/modules/restaurant/factories/RestaurantUseCaseFactory";
 
 export async function createRestaurantController(req: Request, res: Response) {

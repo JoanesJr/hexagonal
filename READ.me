@@ -1,0 +1,123 @@
+# 🍽️ Hexagonal Architecture - Node.js Clean Modular App
+
+Este projeto é uma API de exemplo que implementa a **Arquitetura Hexagonal (Ports & Adapters)**, com aplicação dos princípios **SOLID**, **modularização por contexto**, e separação clara entre camadas de negócio, infraestrutura e entrada/saída.
+
+---
+
+## 📦 Tecnologias Utilizadas
+
+- **Node.js + TypeScript**
+- **Express** (HTTP Adapter)
+- **Prisma** (ORM)
+- **Vitest** (Testes unitários e de integração)
+- **Zod** (Validação de entrada)
+- **Docker + Docker Compose**
+- **Arquitetura Hexagonal (Ports & Adapters)**
+
+---
+
+## 🧱 Estrutura de Pastas
+
+```bash
+├── src
+│   ├── modules/
+│   │   ├── restaurant/
+│   │   ├── menuItem/
+│   ├── shared/                # Errors, Utils, Interfaces globais
+│   ├── infra/
+│   │   ├── http/              # Server, rotas e middlewares
+│   │   └── prisma/            # Client + schema
+│   │   └── queue/             # queueConfig
+│   ├── adapters/
+│   │   ├── inbound/http/      # Controllers
+│   │   ├── inbound/queue/     # Consumers
+│   │   └── outbound/prisma/   # Repositórios
+│   └── index.ts               # Entry point
+````
+
+## 🚀 Como Rodar o Projeto
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/JoanesJr/hexagonal.git
+cd hexagonal
+```
+
+### 2. Suba o banco com Docker
+
+```bash
+docker-compose up -d
+```
+
+> Isso criará um banco PostgreSQL rodando localmente na porta `5432`.
+
+### 3. Instale as dependências
+
+```bash
+pnpm install
+```
+
+### 4. Gere o cliente Prisma e execute as migrations
+
+```bash
+pnpm prisma:generate
+pnpm prisma:migrate
+```
+
+---
+
+## 🧪 Rodando os Testes
+
+### Testes Unitários
+
+```bash
+pnpm test:unit
+```
+
+### Testes de Integração
+
+```bash
+pnpm test:integration
+```
+
+### Cobertura de Testes
+
+```bash
+pnpm test:coverage
+```
+
+---
+
+## 🖥️ Rodando o Servidor
+
+### Em modo desenvolvimento
+
+```bash
+pnpm dev
+```
+
+---
+
+## 🧠 Princípios e Padrões Aplicados
+
+- **Hexagonal Architecture**  
+  Separação de aplicação, domínio, adapters inbound/outbound
+
+- **SOLID**  
+  Responsabilidade única, injeção de dependência, interfaces claras
+
+- **TDD**  
+  Repositórios `in-memory` e testes de integração com Prisma
+
+- **DTOs + Zod**  
+  Para validação no adapter de entrada
+
+- **UseCases**  
+  Contendo apenas regras de negócio puras
+
+
+## Autor
+Joanes Lebarch
+joanesdejesusjr@gmail.com
+https://www.linkedin.com/in/joanesjr/

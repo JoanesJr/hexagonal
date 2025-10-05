@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateMenuItemSchema } from "./shared/schemas";
+import { CreateMenuItemSchema } from "../shared/schemas";
 import { MenuItemUseCaseFactory } from "@/modules/menuItem/factories/MenuItemUseCase.factory";
 
 export async function createMenuItemController(req: Request, res: Response) {
