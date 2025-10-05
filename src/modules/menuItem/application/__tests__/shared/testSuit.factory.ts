@@ -1,3 +1,4 @@
+import { ILoggerService, LoggerService } from "@/infra/logger/loggerService";
 import { InMemoryMenuItemRepository } from "@/modules/menuItem/adapters/outbound/inMemory/InMemoryMenuItemRepository"
 import { PrismaMenuItemRepository } from "@/modules/menuItem/adapters/outbound/prisma/PrismaMenuItem.repository";
 import { IMenuItemReader } from "@/modules/menuItem/ports/IMenuItemReader";
@@ -10,6 +11,7 @@ import { IRestaurantWriter } from "@/modules/restaurant/ports/IRestaurantWriter"
 type Deps = {
     restaurantRepo: IRestaurantReader & IRestaurantWriter;
     menuItemRepo: IMenuItemReader & IMenuItemWriter;
+    logger: ILoggerService;
 };
 
 export type CreateDeps = () => Deps;
@@ -18,14 +20,16 @@ export class TestSuitFactory {
     static createInMemory(): Deps {
         return {
             restaurantRepo: new InMemoryRestaurantRepository(),
-            menuItemRepo: new InMemoryMenuItemRepository()
+            menuItemRepo: new InMemoryMenuItemRepository(),
+            logger: new LoggerService(),
         }
     }
 
     static createPrisma(): Deps {
         return {
             restaurantRepo: new PrismaRestaurantRepository(),
-            menuItemRepo: new PrismaMenuItemRepository()
+            menuItemRepo: new PrismaMenuItemRepository(),
+            logger: new LoggerService(),
         }
     }
 }

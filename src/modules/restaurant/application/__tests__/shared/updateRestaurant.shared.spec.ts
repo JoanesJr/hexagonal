@@ -10,12 +10,12 @@ import { CreateDeps } from "./testSuit.factory";
 export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`UpdateRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
-            const { restaurantRepo } = makeDeps();
+            const { restaurantRepo, logger } = makeDeps();
             const repo = restaurantRepo;
             return {
-                createRestaurant: new CreateRestaurantUseCase(repo, repo),
-                listRestaurant: new ListRestaurantsUseCase(repo),
-                sut: new UpdateRestaurantUseCase(repo, repo)
+                createRestaurant: new CreateRestaurantUseCase(repo, repo, logger),
+                listRestaurant: new ListRestaurantsUseCase(repo, logger),
+                sut: new UpdateRestaurantUseCase(repo, repo, logger)
             }
         }
         it("should be totally update exists restaurant", async () => {

@@ -12,11 +12,11 @@ import { CreateDeps } from "./testSuit.factory";
 export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`UpdateMenuItemUseCase - [${label}]`, () => {
         const makeUseCase = () => {
-            const { menuItemRepo, restaurantRepo } = makeDeps();
+            const { menuItemRepo, restaurantRepo, logger } = makeDeps();
             return {
-                createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo),
-                createMenuItem: new CreateMenuItemUseCase(menuItemRepo, menuItemRepo, restaurantRepo),
-                sut: new UpdateMenuItemUseCase(menuItemRepo, menuItemRepo)
+                createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo, logger),
+                createMenuItem: new CreateMenuItemUseCase(menuItemRepo, menuItemRepo, restaurantRepo, logger),
+                sut: new UpdateMenuItemUseCase(menuItemRepo, menuItemRepo, logger)
             }
         }
         it("should be update with success", async () => {

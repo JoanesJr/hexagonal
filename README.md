@@ -118,6 +118,9 @@ pnpm dev
 - **Use Cases**  
   Pure business logic, decoupled from infrastructure
 
+## Observality
+- [Jaeguer] (http://localhost:16686/)
+
 ---
 
 ## Author

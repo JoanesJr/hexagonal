@@ -9,9 +9,9 @@ import { CreateDeps } from './testSuit.factory';
 export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`CreateRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
-            const { restaurantRepo } = makeDeps();
+            const { restaurantRepo, logger } = makeDeps();
             const repo = restaurantRepo
-            const useCase = new CreateRestaurantUseCase(repo, repo);
+            const useCase = new CreateRestaurantUseCase(repo, repo, logger);
             return useCase;
         }
         it("should be create restaurant", async () => {

@@ -1,3 +1,6 @@
+
+import { setupTelemetry } from "./infra/observability/tracing";
+setupTelemetry();
 import app from "./infra/http/server";
 import { QueueMenuItemConsumerFactory } from "./modules/menuItem/adapters/inbound/queue/QueueConsumer.factory";
 import { QueueRestaurantConsumerFactory } from "./modules/restaurant/adapters/inbound/queue/QueueConsumer.factory";

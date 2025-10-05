@@ -1,0 +1,34 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  # Envia logs ao Loki via OTLP HTTP (se Loki aceitar OTLP logs)
+  otlp/loki:
+    endpoint: "http://loki:3100"
+    url_path: "/loki/api/v1/push"
+    headers:
+      "Content-Type": "application/json"
+  # Exportador de debugging local
+  debug:
+    verbosity: detailed
+  # Exportador de traces para Jaeger (OTLP → jaeger)
+  otlp/jaeger:
+    endpoint: "http://jaeger:4317"
+    # Se precisar usar headers, coloque aqui
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/loki, debug]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/jaeger]

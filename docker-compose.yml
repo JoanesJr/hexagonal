@@ -1,22 +1,62 @@
-# dicjer run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker
-# -e POSTGRESQL_DATABASE=apisolid -p 5432:5432 bitnami/postgressql
-
-version: "3"
-
 services:
-  hexagonal:
+  db:
     image: bitnami/postgresql
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRESQL_USERNAME=docker
       - POSTGRESQL_PASSWORD=docker
       - POSTGRESQL_DATABASE=hexagonal
-  hexagonal-tst:
+
+  db-tst:
     image: bitnami/postgresql
     ports:
-      - 5433:5433
+      - "5433:5432"
     environment:
       - POSTGRESQL_USERNAME=docker
       - POSTGRESQL_PASSWORD=docker
       - POSTGRESQL_DATABASE=hexagonal-tst
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"   # UI
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+      - prometheus
+
+  loki:
+    image: grafana/loki:2.9.1
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./src/infra/loki/loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./src/infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+      - "9600:9600"   # Prometheus metrics do collector (opcional)
+    volumes:
+      - ./src/infra/otel-collector-config.yaml:/etc/otelcol/config.yaml
+    command:
+      - "--config=/etc/otelcol/config.yaml"
+    depends_on:
+      - loki
+      - prometheus

@@ -13,6 +13,9 @@ const envSchema = z.object({
     DATABASE_URL: z.string(),
     DATABASE_URL_TEST: z.string(),
     RABBIT_URL: z.string(),
+    LOKI_URL: z.string(),
+    OTEL_EXPORTER_OTLP_ENDPOINT: z.string(),
+    OTEL_EXPORTER_OTLP_HEADERS: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);

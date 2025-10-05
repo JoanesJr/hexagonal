@@ -11,11 +11,11 @@ import { RestaurantHaveItemsError } from "@/shared/errors/RestaurantHaveItemsErr
 export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`DeleteRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
-            const { restaurantRepo, menuItemsRepo } = makeDeps();
+            const { restaurantRepo, menuItemsRepo, logger } = makeDeps();
             return {
-                createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo),
-                createItem: new CreateMenuItemUseCase(menuItemsRepo, menuItemsRepo, restaurantRepo),
-                sut: new DeleteRestaurantUseCase(restaurantRepo, restaurantRepo, menuItemsRepo)
+                createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo, logger),
+                createItem: new CreateMenuItemUseCase(menuItemsRepo, menuItemsRepo, restaurantRepo, logger),
+                sut: new DeleteRestaurantUseCase(restaurantRepo, restaurantRepo, menuItemsRepo, logger)
             }
         }
         it ("should be deleted exists restaurant with empty items", async () => {
