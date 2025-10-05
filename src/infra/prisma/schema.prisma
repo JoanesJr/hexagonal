@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Restaurant {
-  id        String   @id @default(uuid())
+  id        String   @id 
   name      String
   address   String
   isOpen    Boolean
@@ -23,7 +23,7 @@ model Restaurant {
 }
 
 model MenuItem {
-  id String @id @default(uuid())
+  id String @id
   name String
   description String
   price Float

@@ -35,7 +35,7 @@ export class PrismaRestaurantRepository extends PrismaRepository implements IRes
     }
 
     async findByAll(): Promise<Restaurant[]> {
-        const restaurants = await this.prisma.restaurant.findAll();
+        const restaurants = await this.prisma.restaurant.findMany();
         return restaurants;
     }
 

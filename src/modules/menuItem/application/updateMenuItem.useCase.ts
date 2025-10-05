@@ -16,6 +16,8 @@ export class UpdateMenuItemUseCase {
         }
         const existsSameNameWithSameRestaurant = await this.itemReader.findByFieldAndRestaurant('name', dto.name, existsItem.restaurantId);
         if (existsSameNameWithSameRestaurant && existsSameNameWithSameRestaurant.id != id) {
+            console.log(id);
+            console.log(existsSameNameWithSameRestaurant)
             throw new AlreadyExistsError(UpdateMenuItemUseCase.name);
         }
 
