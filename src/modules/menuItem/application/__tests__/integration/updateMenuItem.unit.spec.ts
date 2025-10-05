@@ -1,12 +1,12 @@
 import { beforeEach } from "vitest";
-import { makeDepsPrisma } from "../shared/makeDeps";
 import { runSharedTests } from "../shared/updateMenuItem.shared.spec";
 import { PrismaClientFactory } from "@/infra/prisma/PrismaClientFactory";
 import { testLabels } from "@/shared/utils/testLabels";
+import { TestSuitFactory } from "../shared/testSuit.factory";
 
 beforeEach(async () => {
     const prisma = PrismaClientFactory.get();
     await prisma.menuItem.deleteMany();
     await prisma.restaurant.deleteMany();
 });
-runSharedTests(testLabels.integrationPrisma, makeDepsPrisma);
+runSharedTests(testLabels.integrationPrisma, TestSuitFactory.createPrisma);

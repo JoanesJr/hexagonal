@@ -7,17 +7,17 @@ import { NotFoundError } from "@/shared/errors/NotFound.error";
 import { AlreadyExistsError } from "@/shared/errors/AlreadyExists.error";
 import { InvalidPriceError } from "@/shared/errors/InvalidPrice.error";
 import { RestaurantIsClosedError } from "@/shared/errors/RestaurantIsClosedError";
-import { IDepsFactory } from "./interfaces.shared";
 import { MissingFieldError } from "@/shared/errors/MissingField.error";
 import { MinLengthError } from "@/shared/errors/MinLengh.error";
+import { CreateDeps } from "./testSuit.factory";
 
 
-export function runSharedTests(label: string, makeDeps: IDepsFactory) {
+export function runSharedTests(label: string, makeDeps: CreateDeps) {
     const makeUseCase = () => {
-        const { repo, restaurantRepo } = makeDeps();
+        const { menuItemRepo, restaurantRepo } = makeDeps();
         return {
             createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo),
-            sut: new CreateMenuItemUseCase(repo, repo, restaurantRepo)
+            sut: new CreateMenuItemUseCase(menuItemRepo, menuItemRepo, restaurantRepo)
         }
     }
     describe(`CreateMenuItemUseCase - [${label}]`, () => {

@@ -3,9 +3,9 @@ import { CreateRestaurantUseCase } from "../../createRestaurant.useCase";
 import { DeleteRestaurantUseCase } from "../../deleteRestaurant.useCase";
 import { mockDTO } from "./mockRestaurants";
 import { NotFoundError } from "@/shared/errors/NotFound.error";
-import { IDepsFactory } from "./interfaces.shared";
+import { CreateDeps } from "./testSuit.factory";
 
-export function runSharedTests(label: string, makeDeps: IDepsFactory) {
+export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`DeleteRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
             const { restaurantRepo } = makeDeps();

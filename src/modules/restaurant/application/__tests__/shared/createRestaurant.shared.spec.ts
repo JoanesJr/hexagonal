@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { CreateRestaurantUseCase } from "../../createRestaurant.useCase";
 import { AlreadyExistsError } from '@/shared/errors/AlreadyExists.error';
 import { mockDTO } from './mockRestaurants';
-import { IDepsFactory } from './interfaces.shared';
 import { MinLengthError } from '@/shared/errors/MinLengh.error';
 import { MissingFieldError } from '@/shared/errors/MissingField.error';
+import { CreateDeps } from './testSuit.factory';
 
-export function runSharedTests(label: string, makeDeps: IDepsFactory) {
+export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`CreateRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
             const { restaurantRepo } = makeDeps();

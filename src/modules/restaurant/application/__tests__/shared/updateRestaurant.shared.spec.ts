@@ -5,9 +5,9 @@ import { ListRestaurantsUseCase } from "../../listRestaursnts.useCase";
 import { mockDTO } from "./mockRestaurants";
 import { AlreadyExistsError } from "@/shared/errors/AlreadyExists.error";
 import { NotFoundError } from "@/shared/errors/NotFound.error";
-import { IDepsFactory } from "./interfaces.shared";
+import { CreateDeps } from "./testSuit.factory";
 
-export function runSharedTests(label: string, makeDeps: IDepsFactory) {
+export function runSharedTests(label: string, makeDeps: CreateDeps) {
     describe(`UpdateRestaurantUseCase - [${label}]`, () => {
         const makeUseCase = () => {
             const { restaurantRepo } = makeDeps();

@@ -7,16 +7,16 @@ import { mockMenuItensDTO } from "./mockMenuItens";
 import { RestaurantIsClosedError } from "@/shared/errors/RestaurantIsClosedError";
 import { UpdateRestaurantUseCase } from "@/modules/restaurant/application/updateRestaurant.useCase";
 import { NotFoundError } from "@/shared/errors/NotFound.error";
-import { IDepsFactory } from "./interfaces.shared";
+import { CreateDeps } from "./testSuit.factory";
 
-export function runSharedTests(label: string, makeDeps: IDepsFactory) {
+export function runSharedTests(label: string, makeDeps: CreateDeps) {
     const makeUseCase = () => {
-        const { repo, restaurantRepo } = makeDeps();
+        const { menuItemRepo, restaurantRepo } = makeDeps();
         return {
             createRestaurant: new CreateRestaurantUseCase(restaurantRepo, restaurantRepo),
             updateRestaurant: new UpdateRestaurantUseCase(restaurantRepo, restaurantRepo),
-            createMenuItem: new CreateMenuItemUseCase(repo, repo, restaurantRepo),
-            sut: new ListMenuByRestaurantUseCase(repo, restaurantRepo)
+            createMenuItem: new CreateMenuItemUseCase(menuItemRepo, menuItemRepo, restaurantRepo),
+            sut: new ListMenuByRestaurantUseCase(menuItemRepo, restaurantRepo)
         }
     }
     describe(`ListMenuByRestaurantUseCase - [${label}]`, () => {

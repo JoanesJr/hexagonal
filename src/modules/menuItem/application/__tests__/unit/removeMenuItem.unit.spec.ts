@@ -1,5 +1,5 @@
 import { testLabels } from "@/shared/utils/testLabels";
-import { makeDepsInMemory } from "../shared/makeDeps";
 import { runSharedTests } from "../shared/removeMenuItem.shared.spec";
+import { TestSuitFactory } from "../shared/testSuit.factory";
 
-runSharedTests(testLabels.unitInMemory, makeDepsInMemory);
+runSharedTests(testLabels.unitInMemory, TestSuitFactory.createInMemory);
