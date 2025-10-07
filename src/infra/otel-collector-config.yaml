@@ -17,7 +17,6 @@ exporters:
   # Exportador de traces para Jaeger (OTLP → jaeger)
   otlp/jaeger:
     endpoint: "http://jaeger:4317"
-    # Se precisar usar headers, coloque aqui
 
 processors:
   batch:
