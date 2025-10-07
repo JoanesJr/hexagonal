@@ -20,7 +20,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
-      - "16686:16686"   # UI
+      - "16686:16686"   
     environment:
       - COLLECTOR_OTLP_ENABLED=true
 
@@ -50,9 +50,9 @@ services:
   collector:
     image: otel/opentelemetry-collector-contrib:latest
     ports:
-      - "4317:4317"   # OTLP gRPC
-      - "4318:4318"   # OTLP HTTP
-      - "9600:9600"   # Prometheus metrics do collector (opcional)
+      - "4317:4317"  
+      - "4318:4318"   
+      - "9600:9600"   
     volumes:
       - ./src/infra/otel-collector-config.yaml:/etc/otelcol/config.yaml
     command:
